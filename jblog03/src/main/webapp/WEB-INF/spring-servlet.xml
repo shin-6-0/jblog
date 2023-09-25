@@ -37,7 +37,7 @@
 		<property name="exposeContextBeansAsAttributes" value="true" />
 	    <property name="exposedContextBeanNames">
 			<list>
-				<value>site</value>
+				<value>jblog</value>
 			</list>	   	
 	    </property>
 	</bean>
