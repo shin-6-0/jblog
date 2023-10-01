@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.poscodx.jblog.vo.BlogVo;
 import com.poscodx.jblog.vo.CategoryVo;
+import com.poscodx.jblog.vo.PostVo;
 import com.poscodx.jblog.vo.UserVo;
 import com.poscodx.jblog.repository.UserRepository;
 import com.poscodx.jblog.repository.BlogRepository;
@@ -66,6 +67,10 @@ public class BlogService {
 
 	public boolean insertCategory(CategoryVo cVo) {
 		return blogRepository.insertCategory(cVo);
+	}
+
+	public boolean insertPost(PostVo pVo) {
+		return blogRepository.insertPost(pVo);
 	}
 
 }

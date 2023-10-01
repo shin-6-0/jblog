@@ -25,5 +25,12 @@
 			, image=#{image}
 			where blog_id=#{blogId}
 		]]>		
-	</update> 
+	</update>
+	
+	<insert id="insertPost" parameterType="postvo">
+		<![CDATA[
+		insert into post
+	    values (null, #{title}, #{contents}, #{categoryNo},now())
+		]]>
+	</insert> 
 </mapper>

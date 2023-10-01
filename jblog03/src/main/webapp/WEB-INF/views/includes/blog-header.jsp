@@ -5,7 +5,7 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
 	<div id="header">
-	<h1>${blogVo.title}</h1>
+	<h1><a href="${pageContext.request.contextPath}/${id}">${blogVo.title}</a></h1>
 		<ul>
 		<c:choose>
 			<c:when test="${empty authUser }">

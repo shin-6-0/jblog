@@ -21,6 +21,7 @@ import com.poscodx.jblog.security.AuthUser;
 import com.poscodx.jblog.service.BlogService;
 import com.poscodx.jblog.vo.BlogVo;
 import com.poscodx.jblog.vo.CategoryVo;
+import com.poscodx.jblog.vo.PostVo;
 import com.poscodx.jblog.vo.UserVo;
 import com.poscodx.jblog.service.FileUploadService;
 import com.poscodx.jblog.service.UserService;
@@ -48,6 +49,7 @@ public class BlogController {
 			Model model) {//categoryNo, postNo 도 가져와야함.Optional로 하면 Null check가능
 		boolean chkId=userService.findById(blogId);
 		if(!chkId) {
+			model.addAttribute("message","존재하지 않는 블로그 주소입니다.");
 			return "error/404";
 		}
 		
@@ -91,15 +93,6 @@ public class BlogController {
 		BeanUtils.copyProperties(blogVo, blog);
 
 		return "blog/admin-basic";
-	}
-	
-	@Auth
-	@RequestMapping("/admin/write")
-	public String adminWrite(@AuthUser UserVo authUser,
-			@PathVariable("id") String blogId, Model model) {
-		BlogVo blogVo = blogService.getBlogById(blogId);
-		model.addAttribute("blogVo",blogVo);
-		return "blog/admin-write";
 	}
 	
 	@Auth
@@ -149,5 +142,32 @@ public class BlogController {
 		blogService.insertCategory(cVo);
 
 		return "redirect:/blog/admin/category";
+	}
+	
+	@Auth
+	@RequestMapping("/admin/write")
+	public String adminWrite(@AuthUser UserVo authUser,
+			@PathVariable("id") String blogId, Model model) {
+		BlogVo blogVo = blogService.getBlogById(blogId);
+		model.addAttribute("blogVo",blogVo);
+		List<Map<String, Object>> cVo = blogService.getCategoryById(authUser.getId());
+		model.addAttribute("list",cVo);
+		return "blog/admin-write";
+	}
+	
+	@Auth
+	@RequestMapping(value="/admin/write",method=RequestMethod.POST)
+	public String addWrite(@AuthUser UserVo authUser,	
+			String title, Long category, String content		
+			) {
+		PostVo pVo = new PostVo();
+		pVo.setCategoryNo(category);
+		pVo.setContents(content);
+		pVo.setTitle(title);
+		
+		System.out.println(">>추가할 postVo = "+pVo);
+		blogService.insertPost(pVo);
+
+		return "redirect:/blog/"+authUser.getId();
 	}
 }
