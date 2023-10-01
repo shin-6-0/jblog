@@ -28,6 +28,12 @@ public class UserRepository {
 		
 		return sqlSession.selectOne("user.findByEmailAndPassword", map);
 	}
+
+	public boolean findById(String blogId) {
+		System.out.println("input blogId = "+blogId);
+		int count = sqlSession.selectOne("user.findById",blogId);
+		return count==1;
+	}
 	
 	
 }
