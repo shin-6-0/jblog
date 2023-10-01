@@ -43,6 +43,7 @@
 				reg_date as regDate
 				from post
 				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				order by no asc
 			]]>
 		</when>
 		<when test="postNo==null">
@@ -65,6 +66,7 @@
 				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
 				AND category_no = #{categoryNo}
 				AND no = #{postNo}
+				order by no asc
 			]]>
 		</otherwise></choose>
 	</select>  

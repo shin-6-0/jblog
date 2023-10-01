@@ -66,18 +66,15 @@ public class BlogController {
 		map.put("blogId", blogId);
 		if(categoryNo.isEmpty()&&postNo.isEmpty()){//카테고리,포스트번호 지정 X
 			List<PostVo> pList=blogService.getPost(map);
-			System.out.println(">> pList = "+pList);
 			model.addAttribute("pList", pList);
 		}else  if(categoryNo.isPresent()&&postNo.isEmpty()) {//카테코리만 지정
 			map.put("categoryNo", categoryNo.get());
 			List<PostVo> pList=blogService.getPost(map);
-			System.out.println(">> pList = "+pList);
 			model.addAttribute("pList", pList);
 		}else {//카테고리,포스트 지정O
 			map.put("categoryNo", categoryNo.get());
 			map.put("postNo", postNo.get());
 			List<PostVo> pList=blogService.getPost(map);
-			System.out.println(">> pList = "+pList);
 			model.addAttribute("pList", pList);
 		}
 		return "blog/main";
