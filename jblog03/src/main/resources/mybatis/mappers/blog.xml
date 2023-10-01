@@ -32,5 +32,40 @@
 		insert into post
 	    values (null, #{title}, #{contents}, #{categoryNo},now())
 		]]>
-	</insert> 
+	</insert>
+	
+	<select id="getPost" resultType="map" parameterType="map">
+	<choose>
+		<when test="categoryNo == null">
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+			]]>
+		</when>
+		<when test="postNo==null">
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				AND category_no = #{categoryNo}
+				order by no asc
+			]]>
+		</when>
+		<otherwise>
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				AND category_no = #{categoryNo}
+				AND no = #{postNo}
+			]]>
+		</otherwise></choose>
+	</select>  
 </mapper>

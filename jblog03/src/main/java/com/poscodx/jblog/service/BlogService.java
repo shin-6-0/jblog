@@ -3,6 +3,7 @@ package com.poscodx.jblog.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -71,6 +72,10 @@ public class BlogService {
 
 	public boolean insertPost(PostVo pVo) {
 		return blogRepository.insertPost(pVo);
+	}
+
+	public List<PostVo> getPost(Map<String,Object> map) {
+		return blogRepository.getPost(map);
 	}
 
 }

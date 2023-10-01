@@ -64,5 +64,9 @@ public class BlogRepository {
 		int count = sqlSession.insert("blog.insertPost",pVo);
 		return count==1;
 	}
+
+	public List<PostVo> getPost(Map<String, Object> map) {
+		return sqlSession.selectList("blog.getPost",map);
+	}
 	
 }

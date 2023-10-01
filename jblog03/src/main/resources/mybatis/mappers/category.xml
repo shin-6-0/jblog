@@ -45,5 +45,6 @@
 			set category_no=(select no from category where blog_id=#{blogId } limit 0,1)
 			where category_no=#{no }
 		]]>		
-	</update> 
+	</update>
+	
 </mapper>

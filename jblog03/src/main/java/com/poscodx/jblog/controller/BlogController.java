@@ -1,5 +1,6 @@
 package com.poscodx.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +48,10 @@ public class BlogController {
 			,@PathVariable("categoryNo") Optional<String> categoryNo
 			,@PathVariable("postNo") Optional<String> postNo,
 			Model model) {//categoryNo, postNo 도 가져와야함.Optional로 하면 Null check가능
+		System.out.println("*********************");
+		System.out.println("categoryNo = "+categoryNo+", postNo = "+postNo);
+		System.out.println("*********************");
+		
 		boolean chkId=userService.findById(blogId);
 		if(!chkId) {
 			model.addAttribute("message","존재하지 않는 블로그 주소입니다.");
@@ -55,13 +60,28 @@ public class BlogController {
 		
 		BlogVo blogVo = blogService.getBlogById(blogId);
 		model.addAttribute("blogVo",blogVo);
+		List<Map<String, Object>> cVo = blogService.getCategoryById(blogId);
+		model.addAttribute("cList",cVo);
+		Map<String,Object> map = new HashMap();
+		map.put("blogId", blogId);
 		if(categoryNo.isEmpty()&&postNo.isEmpty()){//카테고리,포스트번호 지정 X
-			return "blog/main";
+			List<PostVo> pList=blogService.getPost(map);
+			System.out.println(">> pList = "+pList);
+			model.addAttribute("pList", pList);
 		}else  if(categoryNo.isPresent()&&postNo.isEmpty()) {//카테코리만 지정
-			return blogId+"/"+categoryNo;
+			map.put("categoryNo", categoryNo.get());
+			List<PostVo> pList=blogService.getPost(map);
+			System.out.println(">> pList = "+pList);
+			model.addAttribute("pList", pList);
 		}else {//카테고리,포스트 지정O
-			return blogId+"/"+categoryNo+"/"+postNo;
+			map.put("categoryNo", categoryNo.get());
+			map.put("postNo", postNo.get());
+			List<PostVo> pList=blogService.getPost(map);
+			System.out.println(">> pList = "+pList);
+			model.addAttribute("pList", pList);
 		}
+		return "blog/main";
+
 	}
 	
 	@Auth
@@ -168,6 +188,6 @@ public class BlogController {
 		System.out.println(">>추가할 postVo = "+pVo);
 		blogService.insertPost(pVo);
 
-		return "redirect:/blog/"+authUser.getId();
+		return "redirect:/"+authUser.getId();
 	}
 }
