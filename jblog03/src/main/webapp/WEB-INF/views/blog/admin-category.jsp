@@ -19,7 +19,8 @@
 					<li class="selected">카테고리</li>
 					<li><a href="${pageContext.request.contextPath}/${id}/admin/write">글작성</a></li>
 				</ul>
-		      	<table class="admin-cat">
+
+			      	<table class="admin-cat">
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
@@ -27,30 +28,24 @@
 		      			<th>설명</th>
 		      			<th>삭제</th>      			
 		      		</tr>
+		      		<c:set var="count" value="${fn:length(list) }" />
+					<c:forEach items="${list }" var="vo" varStatus="status">
 					<tr>
-						<td>3</td>
-						<td>미분류</td>
-						<td>10</td>
-						<td>카테고리를 지정하지 않은 경우</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+						<td>${status.index+1}</td>
+						<td>${vo.name}</td>
+						<td>${vo.postCount}</td>
+						<td>${vo.description}</td>
+						<td>
+						<c:if test="${status.index ne 0}">
+						<a href="${pageContext.request.contextPath}/${id}/admin/category_delete/${vo.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a>
+						</c:if></td>
 					</tr>  
-					<tr>
-						<td>2</td>
-						<td>스프링 스터디</td>
-						<td>20</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>스프링 프로젝트</td>
-						<td>15</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>					  
+					</c:forEach>					  
 				</table>
-      	
+				<br>
+				<p style="color:#621513;font-weight:bold;">❗ 포스트가 존재하는 카테고리를 삭제할 경우, 미분류 카테고리로 포스트가 이동됩니다.</p>
       			<h4 class="n-c">새로운 카테고리 추가</h4>
+      			<form action="${pageContext.request.contextPath }/${id}/admin/category/add" method="post">
 		      	<table id="admin-cat-add">
 		      		<tr>
 		      			<td class="t">카테고리명</td>
@@ -58,13 +53,14 @@
 		      		</tr>
 		      		<tr>
 		      			<td class="t">설명</td>
-		      			<td><input type="text" name="desc"></td>
+		      			<td><input type="text" name="description"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="s">&nbsp;</td>
 		      			<td><input type="submit" value="카테고리 추가"></td>
 		      		</tr>      		      		
-		      	</table> 
+		      	</table>
+		      	</form> 
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/blog-footer.jsp" />

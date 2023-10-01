@@ -3,7 +3,7 @@ package com.poscodx.jblog.vo;
 public class BlogVo {
 	private String blogId;
 	private String title;
-	private String imange;
+	private String image;
 	public String getBlogId() {
 		return blogId;
 	}
@@ -16,16 +16,16 @@ public class BlogVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getImange() {
-		return imange;
+	public String getImage() {
+		return image;
 	}
-	public void setImange(String imange) {
-		this.imange = imange;
+	public void setImage(String Image) {
+		this.image = Image;
 	}
 	@Override
 	public String toString() {
-		return "BlogVo [blogId=" + blogId + ", title=" + title + ", imange=" + imange + ", getBlogId()=" + getBlogId()
-				+ ", getTitle()=" + getTitle() + ", getImange()=" + getImange() + ", getClass()=" + getClass()
+		return "BlogVo [blogId=" + blogId + ", title=" + title + ", image=" + image + ", getBlogId()=" + getBlogId()
+				+ ", getTitle()=" + getTitle() + ", getImage()=" + getImage() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 	
