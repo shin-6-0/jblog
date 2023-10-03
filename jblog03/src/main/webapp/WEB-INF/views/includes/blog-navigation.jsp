@@ -5,7 +5,7 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
 	<div id="navigation">
-		<h2>카테고리</h2>
+		<h2> 카테고리 </h2>
 		<ul>
 		<c:forEach items="${cList }" var="vo" varStatus="status">
 			<li><a href="${pageContext.request.contextPath}/${id}/${vo.no}">${vo.name}</a></li>
