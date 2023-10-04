@@ -91,23 +91,18 @@ public class BlogController {
 	}
 	
 	@Auth
-	@RequestMapping(value="/admin/basic",method=RequestMethod.POST)
-	public String adminBasic(@AuthUser UserVo authUser,	
-			@PathVariable("id") String blogId, 
-			BlogVo blogVo
-			,MultipartFile file) {
-		
+	@RequestMapping(value="/admin/basic/update",method=RequestMethod.POST)
+	public String adminBasic(@AuthUser UserVo authUser,BlogVo blogVo, MultipartFile file) {
+		System.out.println("JBLOG : file >> "+file);
 		String profile = fileuploadService.restore(file);
 		if(profile != null) {
+			blogVo.setBlogId(authUser.getId());
 			blogVo.setImage(profile);
+			System.out.println(profile);
 		}
 		
-		BlogVo blog = applicationContext.getBean(BlogVo.class);
-
-		System.out.println(">>admin페이지 blog내용 업데이트 "+blogVo);
 		blogService.update(blogVo);
-		servletContext.setAttribute("blogVo", blogVo);
-		BeanUtils.copyProperties(blogVo, blog);
+		System.out.println(">>admin페이지 blog내용 업데이트 "+blogVo);
 
 		return "blog/admin-basic";
 	}
