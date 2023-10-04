@@ -26,7 +26,7 @@ public class UserService {
 		BlogVo blogVo = new BlogVo();
 		blogVo.setBlogId(userVo.getId());
 		blogVo.setTitle(userVo.getId()+"의 블로그");
-		blogVo.setImage("/assets/upload-images/init-logo");
+		blogVo.setImage("/assets/upload-images/init-logo.png");
 		System.out.println(">> Blog 정보 "+blogVo);
 		blogRepository.insert(blogVo);
 		CategoryVo categoryVo = new CategoryVo();
