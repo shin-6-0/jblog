@@ -49,7 +49,7 @@ public class BlogController {
 			,@PathVariable("postNo") Optional<String> postNo,
 			Model model) {//categoryNo, postNo 도 가져와야함.Optional로 하면 Null check가능
 		System.out.println("*********************");
-		System.out.println("categoryNo = "+categoryNo+", postNo = "+postNo);
+		System.out.println("아이디 = "+blogId+", categoryNo = "+categoryNo+", postNo = "+postNo);
 		System.out.println("*********************");
 		
 		boolean chkId=userService.findById(blogId);

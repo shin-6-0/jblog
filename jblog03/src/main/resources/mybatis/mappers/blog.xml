@@ -42,7 +42,7 @@
 				category_no as categoryNo,
 				reg_date as regDate
 				from post
-				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				where (category_no in (select no from category where blog_id = #{blogId }))
 				order by no asc
 			]]>
 		</when>
@@ -52,7 +52,7 @@
 				category_no as categoryNo,
 				reg_date as regDate
 				from post
-				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				where (category_no in (select no from category where blog_id=#{blogId }))
 				AND category_no = #{categoryNo}
 				order by no asc
 			]]>
@@ -63,7 +63,7 @@
 				category_no as categoryNo,
 				reg_date as regDate
 				from post
-				where (category_no in (select no from category where blog_id='shin6_0@jblog.com'))
+				where (category_no in (select no from category where blog_id=#{blogId }))
 				AND category_no = #{categoryNo}
 				AND no = #{postNo}
 				order by no asc
