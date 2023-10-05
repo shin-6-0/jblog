@@ -144,14 +144,15 @@ public class BlogController {
 			blogService.deleteCategory(no);
 		}
 		
-		return "redirect:/blog/admin/category";
+		return "redirect:/"+authUser.getId()+"/admin/category";
 	}
 	
 	@Auth
 	@RequestMapping(value="/admin/category/add",method=RequestMethod.POST)
 	public String addCategory(@AuthUser UserVo authUser,	
 			String name,
-			 String description			
+			 String description,
+			 Model model
 			) {
 		CategoryVo cVo = new CategoryVo();
 		cVo.setName(name);
@@ -159,8 +160,7 @@ public class BlogController {
 		cVo.setDescription(description);
 		System.out.println(">>추가할 CategoryVo = "+cVo);
 		blogService.insertCategory(cVo);
-
-		return "redirect:/blog/admin/category";
+		return "redirect:/"+authUser.getId()+"/admin/category";
 	}
 	
 	@Auth
