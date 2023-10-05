@@ -92,17 +92,24 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping(value="/admin/basic/update",method=RequestMethod.POST)
-	public String adminBasic(@AuthUser UserVo authUser,BlogVo blogVo, MultipartFile file) {
+	public String adminBasic(@AuthUser UserVo authUser,
+			Optional<BlogVo> blogVo, Optional<MultipartFile> file
+			,Model model) {
 		System.out.println("JBLOG : file >> "+file);
-		String profile = fileuploadService.restore(file);
+		if(file.isEmpty()&&blogVo.get().getTitle()==null) {
+			model.addAttribute("message","변경된 내역이 없습니다.");
+			return "error/404";
+		}
+		String profile = fileuploadService.restore(file.get());
+		blogVo.get().setBlogId(authUser.getId());
 		if(profile != null) {
-			blogVo.setBlogId(authUser.getId());
-			blogVo.setImage(profile);
+			blogVo.get().setImage(profile);
 			System.out.println(profile);
 		}
-		
-		blogService.update(blogVo);
+		System.out.println(">>blogId = "+blogVo.get().getBlogId());
+		blogService.update(blogVo.get());
 		System.out.println(">>admin페이지 blog내용 업데이트 "+blogVo);
+		model.addAttribute("blogVo", blogVo.get());
 
 		return "blog/admin-basic";
 	}
