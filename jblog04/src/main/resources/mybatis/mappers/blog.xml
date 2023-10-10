@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+	
+	<insert id="insert" parameterType="blogvo">
+		<![CDATA[
+		insert into blog
+	    values (#{blogId}, #{title}, #{image})
+		]]>
+	</insert>
+	
+	<select id="getBlogById" resultType="blogvo">
+		<![CDATA[
+		select blog_id,title,image
+		  from blog
+		 where blog_id = #{blogId}
+		]]>
+	</select>
+	
+	<update id="update" parameterType="blogvo">
+	<choose>
+		<when test="image == null">
+			<![CDATA[
+				update blog
+				set title = #{title}
+				where blog_id=#{blogId}
+			]]>	
+		</when>
+		<when test="title == null">
+			<![CDATA[
+				update blog
+				set image = #{image}
+				where blog_id=#{blogId}
+			]]>	
+		</when>
+		<otherwise>
+			<![CDATA[
+				update blog
+				set title = #{title}
+				, image=#{image}
+				where blog_id=#{blogId}
+			]]>
+		</otherwise>
+	</choose>
+	</update>
+	
+	<insert id="insertPost" parameterType="postvo">
+		<![CDATA[
+		insert into post
+	    values (null, #{title}, #{contents}, #{categoryNo},now())
+		]]>
+	</insert>
+	
+	<select id="getPost" resultType="map" parameterType="map">
+	<choose>
+		<when test="categoryNo == null">
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id = #{blogId }))
+				order by no asc
+			]]>
+		</when>
+		<when test="postNo==null">
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id=#{blogId }))
+				AND category_no = #{categoryNo}
+				order by no asc
+			]]>
+		</when>
+		<otherwise>
+			<![CDATA[
+				select no,title,contents,
+				category_no as categoryNo,
+				reg_date as regDate
+				from post
+				where (category_no in (select no from category where blog_id=#{blogId }))
+				AND category_no = #{categoryNo}
+				AND no = #{postNo}
+				order by no asc
+			]]>
+		</otherwise></choose>
+	</select>  
+</mapper>
